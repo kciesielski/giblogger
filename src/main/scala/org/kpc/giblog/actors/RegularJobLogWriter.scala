@@ -10,16 +10,24 @@ class RegularJobLogWriter(batchDuration: FiniteDuration, waitDuration: FiniteDur
   import context.dispatcher
 
   var jobId: Int = 0
+  val failureIndex = 7
+  var currentJobIndex = 0
 
   override def receive = {
     case "start" =>
-      // TODO failure
       jobId = Random.nextInt(10000)
-      logger.info(s"BatchStart! Starting a long batch job $jobId")
-      context.system.scheduler.scheduleOnce(batchDuration, self, "end")
+      currentJobIndex = currentJobIndex + 1
+      if (currentJobIndex == failureIndex) {
+        // skip one round
+        context.system.scheduler.scheduleOnce(waitDuration + batchDuration, self, "start")
+      }
+      else {
+        logger.info(s"BatchStart! Starting a long batch job $jobId")
+        context.system.scheduler.scheduleOnce(batchDuration, self, "end")
+      }
       
     case "end" =>
-      logger.info(s"BatchEnd! Starting a long batch job $jobId")
+      logger.info(s"BatchEnd! Finishing batch job $jobId")
       context.system.scheduler.scheduleOnce(waitDuration, self, "start")
   }
 
