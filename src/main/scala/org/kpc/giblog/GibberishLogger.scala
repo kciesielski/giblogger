@@ -10,7 +10,7 @@ object GibberishLogger extends App {
 
   import actorSystem.dispatcher
 
-  val appRuntime = 40 seconds
+  val appRuntime = 1 hour
 
   val noiseWriter = actorSystem.actorOf(Props(new NoiseLogWriter()))
   val disasterWriter = actorSystem.actorOf(Props(new DisasterLogWriter()))
@@ -19,7 +19,7 @@ object GibberishLogger extends App {
   regularJobWriter ! "start"
   noiseWriter ! "loop"
 
-  scheduleDisaster(disasterWriter, 2 seconds)
+  scheduleDisaster(disasterWriter, 35 minutes)
 
   Thread.sleep(appRuntime.toMillis)
   actorSystem.shutdown()
