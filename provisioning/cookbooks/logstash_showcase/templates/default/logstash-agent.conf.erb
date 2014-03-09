@@ -1,0 +1,19 @@
+input {
+file {
+path => "<%= node[:logstash_agent][:app_log_path] %>"
+type => "mongolog"
+codec => multiline {
+pattern => "^%{DAY} %{MONTH}  %{MONTHDAY} "
+negate => true
+what => previous
+}
+}
+}
+
+output {
+redis {
+host => "localhost"
+data_type => "list"
+key => "logstash"
+}
+}

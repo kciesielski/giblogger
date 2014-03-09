@@ -1,0 +1,10 @@
+source "http://api.berkshelf.com"
+
+cookbook "ulimit", "0.3.2", github : "bmhatfield/chef-ulimit", tag : "95d533b57c81398d31611f55829094fd95dff7ab"
+cookbook "redisio", "1.7.0", github : "brianbianco/redisio", tag : "1.7.0"
+cookbook "logstash", "0.7.6", github : "lusis/chef-logstash", tag : "b21850419ab73a2edb0e02b37df94d66e7fedae3"
+cookbook "elasticsearch", "0.3.7", github : "elasticsearch/cookbook-elasticsearch", tag : "e65d06f7388185fe26647413bfac41757746a7a4"
+cookbook "kibana", "1.2.0", github : "lusis/chef-kibana", tag : "d993f1a82e5b59c90f71b7905deba0ff1b257970"
+cookbook "java", "1.19.2", github : "socrata-cookbooks/java", tag : "v1.19.2"
+
+cookbook "logstash_showcase", path : "cookbooks/logstash_showcase"

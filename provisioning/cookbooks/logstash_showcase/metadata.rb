@@ -1,0 +1,12 @@
+name 'logstash_showcase'
+maintainer 'Krzysztof Ciesielski'
+maintainer_email 'panciesielski@gmail.com'
+license 'All rights reserved'
+description 'Installs/Configures a box with logstash agent + server, using elasticsearch and redis'
+version '1.0'
+
+depends 'java'
+depends 'redisio'
+depends 'elasticsearch'
+depends 'logstash'
+depends 'kibana'

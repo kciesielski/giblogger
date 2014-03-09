@@ -1,0 +1,1 @@
+default[:redisio][:default_settings][:databases] = '1'

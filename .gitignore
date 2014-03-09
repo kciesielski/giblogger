@@ -17,3 +17,8 @@ logs
 *.ipr
 *.iws
 .idea/
+
+# Vagrant, Chef
+virtualbox
+*.lock
+.vagrant

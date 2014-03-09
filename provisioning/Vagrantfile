@@ -1,0 +1,73 @@
+Vagrant.require_plugin "vagrant-berkshelf"
+Vagrant.require_plugin "vagrant-omnibus"
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+
+def setup_chef_defaults chef
+  chef.environments_path = 'environments'
+  chef.environment = 'development'
+  chef.roles_path = 'roles'
+end
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.network "forwarded_port", guest : 9201, host : 9201
+  config.vm.network "forwarded_port", guest : 443, host : 1443
+  config.vm.network "forwarded_port", guest : 9200, host : 9200
+  config.omnibus.chef_version = "11.8.2"
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  # Every Vagrant virtual environment requires a box to build off of.
+  # To add box if missing: vagrant box add precise64-chef11 http://grahamc.com/vagrant/ubuntu-12.04-omnibus-chef.box
+  config.vm.box = "precise64-chef11"
+
+  # The url from where the 'config.vm.box' box will be fetched if it
+  # doesn't already exist on the user's system.
+  # config.vm.box_url = "http://domain.com/path/to/above.box"
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  # config.vm.network :private_network, ip: "192.168.33.10"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network :public_network
+
+  # If true, then any SSH connections made will enable agent forwarding.
+  # Default value: false
+  # config.ssh.forward_agent = true
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+  config.vm.provider :virtualbox do |vb|
+    #   # Don't boot with headless mode
+    #   vb.gui = true
+    #
+    #   # Use VBoxManage to customize the VM. For example to change memory:
+    vb.customize ["modifyvm", :id, "--memory", "1024"]
+  end
+  #
+  # View the documentation for the provider you're using for more
+  # information on available options.
+
+  # Enable provisioning with chef solo, specifying a cookbooks path, roles
+  # path, and data_bags path (all relative to this Vagrantfile), and adding
+  # some recipes and/or roles.
+  #
+  config.berkshelf.enabled = true
+
+  config.vm.define "logstash_showcase", primary : true do | node |
+
+  node.vm.provision :chef_solo do |chef|
+    setup_chef_defaults chef
+    chef.add_role "logstash_showcase"
+  end
+end
+
+end
