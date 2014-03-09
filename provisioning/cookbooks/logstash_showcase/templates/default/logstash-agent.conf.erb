@@ -1,9 +1,9 @@
 input {
 file {
 path => "<%= node[:logstash_agent][:app_log_path] %>"
-type => "mongolog"
+type => "applog"
 codec => multiline {
-pattern => "^%{DAY} %{MONTH}  %{MONTHDAY} "
+pattern => "^%{TIMESTAMP_ISO8601} "
 negate => true
 what => previous
 }

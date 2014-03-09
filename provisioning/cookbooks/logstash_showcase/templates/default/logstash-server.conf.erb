@@ -9,9 +9,6 @@ redis {
 
 
 filter {
-<% unless node['logstash']['server']['filters'].empty? -%>
-    <%= LogstashConf.section_to_str(node['logstash']['server']['filters'], node['logstash']['server']['version'], @patterns_dir) %>
-<% end -%>
 if [type] in ["applog"] {
 grok {
 patterns_dir => "<%= node[:logstash][:server][:home] %>/etc/patterns/base"
@@ -31,7 +28,7 @@ remove_field => ["time"]
 
 if [type] == "mongolog" {
 grok {
-patterns_dir => "<%= node[:logstash][:server][:home] %>/etc/patterns"
+patterns_dir => "<%= node[:logstash][:server][:home] %>/etc/patterns/base"
 match => ["message", "%{DAY} %{MONTH}  %{MONTHDAY} %{TIME:time} \[%{DATA:src}\] %{MULTILINE_GREEDYDATA:message}"]
 overwrite => ["message"]
 }
