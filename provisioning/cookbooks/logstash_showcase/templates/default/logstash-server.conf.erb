@@ -9,7 +9,7 @@ redis {
 
 
 filter {
-if [type] in ["applog"] {
+if [type] == "applog" {
 grok {
 patterns_dir => "<%= node[:logstash][:server][:home] %>/etc/patterns/base"
 match => ["message", "%{TIMESTAMP_ISO8601:time} \[%{DATA:thread}\] %{LOGLEVEL:loglevel} %{DATA:source} - %{MULTILINE_GREEDYDATA:message}"]
