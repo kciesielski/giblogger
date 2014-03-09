@@ -1,6 +1,6 @@
 
 target/
-*.log
+
 repos
 .DS_Store
 local.conf
