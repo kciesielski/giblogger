@@ -4,10 +4,10 @@ gem 'json', '1.7.7'
 gem 'knife-solo'
 # See https://github.com/berkshelf/berkshelf/pull/870
 # and https://github.com/berkshelf/berkshelf/issues/760
-gem 'berkshelf', github : 'berkshelf/berkshelf'
-gem "vagrant", github : "mitchellh/vagrant", tag : "v1.4.2"
-gem 'vagrant-berkshelf', github : "berkshelf/vagrant-berkshelf"
-gem 'vagrant-omnibus', github : "schisamo/vagrant-omnibus"
+gem 'berkshelf', :github => 'berkshelf/berkshelf'
+gem "vagrant", :github => "mitchellh/vagrant", :tag => "v1.4.2"
+gem 'vagrant-berkshelf', :github => "berkshelf/vagrant-berkshelf"
+gem 'vagrant-omnibus', :github => "schisamo/vagrant-omnibus"
 gem 'trollop'
 
 gem 'chef', '>= 11.8.2'
